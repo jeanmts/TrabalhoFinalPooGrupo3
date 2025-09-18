@@ -9,7 +9,6 @@ public class FolhaPagamento {
 	private double salarioLiquido;
 
 	
-	
 	public FolhaPagamento() {
 		super();
 	}
@@ -68,18 +67,18 @@ public class FolhaPagamento {
 		double salarioMaisDependentes = salarioBruto + (numeroDeDependentes * 189.59);
 
 		if (salarioMaisDependentes >= 2259.21 && salarioMaisDependentes <= 2826.65) {
-			double valorADeduzir = salarioMaisDependentes - (salarioMaisDependentes * 1.075);
+			double valorADeduzir = (salarioMaisDependentes * 1.075) - salarioMaisDependentes ;
 			return valorADeduzir;
 		
 		} else if (salarioMaisDependentes >= 2826.66 && salarioMaisDependentes <= 3751.05) {
-			double valorADeduzir = salarioMaisDependentes - (salarioMaisDependentes * 1.15);
+			double valorADeduzir =(salarioMaisDependentes * 1.15) - salarioMaisDependentes ;
 			return valorADeduzir;
 		
 		} else if(salarioMaisDependentes >= 3751.06 && salarioMaisDependentes < 4664.68) {
-			double valorADeduzir = salarioMaisDependentes - (salarioMaisDependentes * 1.225);
+			double valorADeduzir =(salarioMaisDependentes * 1.225) - salarioMaisDependentes;
 			return valorADeduzir;
 		} else {
-			double valorADeduzir = salarioMaisDependentes - (salarioMaisDependentes * 1.275);
+			double valorADeduzir = (salarioMaisDependentes * 1.275) - salarioMaisDependentes;
 			return valorADeduzir;
 		}
 	}
