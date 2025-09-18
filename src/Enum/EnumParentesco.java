@@ -1,4 +1,4 @@
-package ENUM;
+package Enum;
 
 public enum EnumParentesco {
 	FILHO,
