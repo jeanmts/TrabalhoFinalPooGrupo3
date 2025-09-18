@@ -52,8 +52,12 @@ public class FolhaPagamento {
 		this.salarioLiquido = salarioLiquido;
 	}
 
-	public double calcularSalarioLiquido() {
-		return 0.0;
+	public double calcularSalarioLiquido(double salarioBruto, int numeroDeDependentes) {
+		
+		double descontoINSS = calcularINSS();
+		double descontoIR = calcularIR(salarioBruto, numeroDeDependentes);
+		this.salarioLiquido = salarioBruto - descontoINSS - descontoIR;
+		return this.salarioLiquido; 
 
 	}
 
