@@ -10,6 +10,22 @@ package Entity;
 			super();
 		}
 		
+		public String getCpf() {
+			return cpf;
+		}
+
+		public void setCpf(String cpf) {
+			this.cpf = cpf;
+		}
+
+		public LocalDate getDataDeNascimento() {
+			return dataDeNascimento;
+		}
+
+		public void setDataDeNascimento(LocalDate dataDeNascimento) {
+			this.dataDeNascimento = dataDeNascimento;
+		}
+
 		public Pessoa(String nome, String cpf, LocalDate dataDeNascimento) {
 			super();
 			this.nome = nome;
