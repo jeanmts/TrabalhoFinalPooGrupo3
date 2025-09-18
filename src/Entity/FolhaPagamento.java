@@ -58,8 +58,19 @@ public class FolhaPagamento {
 	}
 
 	public double calcularINSS() {
+		double salarioBruto = funcionario.getSalarioBruto();
 
-		return 0.0;
+		if (salarioBruto <= 1518.00) {
+			return salarioBruto * 0.075;
+		} else if (salarioBruto >= 1518.01 && salarioBruto <= 2793.88) {
+			return (salarioBruto * 0.09) - 22.77;
+		} else if (salarioBruto >=2793.89 && salarioBruto <= 4190.83) {
+			return (salarioBruto * 0.12) - 106.60;
+		} else if (salarioBruto >= 4190.84 && salarioBruto <= 8157.41) {
+			return (salarioBruto * 0.14) - 190.42;
+		} else {
+			return 951.62;
+		}
 	}
 
 	public double calcularIR(double salarioBruto, int numeroDeDependentes) {
