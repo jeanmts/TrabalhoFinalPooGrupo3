@@ -12,6 +12,11 @@ public class FolhaPagamento {
 	public FolhaPagamento() {
 		super();
 	}
+	
+	public FolhaPagamento(Funcionario funcionario) {
+		super();
+		this.funcionario = funcionario;
+	}
 
 	public FolhaPagamento(Integer codigo, Funcionario funcionario, LocalDate dataPagamento) {
 		super();
