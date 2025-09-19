@@ -23,4 +23,13 @@ public class Funcionario extends Pessoa {
 		this.salarioBruto = salarioBruto;
 	}
 
+	@Override
+	public String toString() {
+		return "\nFuncionario:\nNome: " + getNome() + " CPF: " + getCpf() 
+				+ " Data de nascimento: "  + getDataDeNascimento() + " Salario bruto: " + getSalarioBruto() + "\nDependentes:";
+
+	}
+	
+	
+
 }
