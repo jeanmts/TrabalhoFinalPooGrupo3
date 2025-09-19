@@ -19,4 +19,12 @@ public class Dependente extends Pessoa {
 	public void setParentesco(EnumParentesco parentesco) {
 		this.parentesco = parentesco;
 	}
+
+	@Override
+	public String toString() {
+		return "Nome dependente: " + getNome() + " CPF: " + getCpf()
+		+" Data de nascimento: " + getDataDeNascimento() + " Parentesco: " + getParentesco();
+	}
+	
+	
 }

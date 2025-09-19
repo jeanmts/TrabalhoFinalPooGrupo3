@@ -6,24 +6,53 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import Enum.EnumParentesco;
 
 public class EntradaArquivo {
-	
+
 	public void lerArquivo(String path) {
 		try {
 			List<Funcionario> listaFuncionarios = new ArrayList<>();
+			List<Dependente> listaDependentes = new ArrayList<>();
+
 			BufferedReader ler = new BufferedReader(new FileReader(path));
 
+			Funcionario atual = null;
+			boolean ehVazio = false;
+
 			while (ler.ready()) {
-				String linha = ler.readLine();
-				String[] a = linha.split(";", 4);
+				String linha = ler.readLine().trim();
 
-				Funcionario func = new Funcionario(a[0], a[1], LocalDate.parse(a[2]), Double.parseDouble(a[3]));
-				listaFuncionarios.add(func);
+				if (linha.isBlank()) {
+					ehVazio = false;
+					continue;
+				}
 
+				if (ehVazio == false) {
+					String[] lerFuncionario = linha.split(";", -1); 
+					
+					Funcionario funcionario = new Funcionario(lerFuncionario[0], lerFuncionario[1], 
+							LocalDate.parse(lerFuncionario[2]), Double.parseDouble(lerFuncionario[3]));
+					
+					listaFuncionarios.add(funcionario);
+					atual = funcionario;
+					ehVazio = true;
+					System.out.println(atual.toString());
+					
+				} else {
+					String[] lerDependente = linha.split(";", -1);
+
+					Dependente dependentes = new Dependente(lerDependente[0], lerDependente[1], 
+							LocalDate.parse(lerDependente[2]), EnumParentesco.valueOf(lerDependente[3]));
+					
+					listaDependentes.add(dependentes);
+					
+					System.out.println(dependentes.toString());
+				}
 			}
-			
 			ler.close();
+			
+			System.out.println("Arquivo carregado com sucesso!");
 			
 		} catch (IOException e) {
 			System.out.println("Erro na leitura do arquivo\n" + e.getMessage());
