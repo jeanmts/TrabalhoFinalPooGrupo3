@@ -1,9 +1,10 @@
 package Utils;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class Connection {
+public class ConnectionFactory {
 
 	String url = "jdbc:postgresql://localhost:5432/empresaPoo";
 	String usuario = "postgres";
