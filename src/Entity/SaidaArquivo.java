@@ -12,7 +12,8 @@ public class SaidaArquivo {
 			BufferedWriter escritor = new BufferedWriter(new FileWriter(path + "tabela.csv"));
 			escritor.append(funcionario.getNome() + ";");
 			escritor.append(funcionario.getCpf() + ";");
-			escritor.append(funcionario.getDataDeNascimento() + ";");
+			escritor.append(funcionario.getDescontoInss() + ";");
+			escritor.append(funcionario.getDescontoIR() + ";");
 			escritor.append(pgto.getSalarioLiquido() + ";");
 			escritor.close();
 		} catch (IOException e) {
