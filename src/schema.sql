@@ -5,8 +5,6 @@ nome_funcionario varchar(100) not null,
 cpf_funcionario varchar(11) unique not null,
 data_de_nascimento_funcionario date not null,
 salarioBruto numeric(10,2) not null,
-descontoINSS numeric(10,2),
-descontoIR numeric(10,2)
 );
 
 create table Dependentes (
