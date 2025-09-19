@@ -24,5 +24,6 @@ data_pagamento date not null,
 desconto_INSS numeric(10,2) not null,
 desconto_IR numeric(10,2) not null,
 id_funcionario_func int not null,
+salarioLiquido numeric(10,2) not null
 foreign key (id_funcionario_func) references funcionario (id_funcionario) on delete cascade
 );
