@@ -29,9 +29,6 @@ public class DependenteDao {
 			throw new DependenteException("Erro: Depedente não pode ser cadastrado pois é maior de idade."); 
 		}
 		
-		if (id_funcionario==null) {
-			throw new DependenteException("O ID do funcionário precisa ser informado.");
-		}
 		String sql = "insert into dependente(nome_dependente, " + "cpf_dependente, "
 				+ "data_de_nascimento_dependente, " + "parentesco_dependente, "+" id_funcionario_func") values (?,?,?,?)";
 		try {
