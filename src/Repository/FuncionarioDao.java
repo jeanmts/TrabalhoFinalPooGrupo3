@@ -60,17 +60,18 @@ public class FuncionarioDao {
 		return funcionarios;
 	}
 	
-	public void atualizarFuncionario(Funcionario funcionario) {
+	public void atualizarFuncionario(Funcionario funcionario, Integer idFuncionario) {
 		String sql = "update funcionario set nome_funcionario=?, "
 				+ "cpf_funcionario=?, "
 				+ "data_de_nascimento_funcionario=?, "
-				+ "salarioBruto=?";
+				+ "salarioBruto=?" + "where id_funcionario =?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, funcionario.getNome());
 			stmt.setString(2, funcionario.getCpf());
 			stmt.setDate(3, java.sql.Date.valueOf(funcionario.getDataDeNascimento()));
 			stmt.setDouble(4, funcionario.getSalarioBruto());
+			stmt.setInt(5, idFuncionario);
 			stmt.execute();
 			stmt.close();
 			connection.close();

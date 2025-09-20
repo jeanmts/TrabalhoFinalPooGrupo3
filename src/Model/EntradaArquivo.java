@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import Enum.EnumParentesco;
+import Repository.DependenteDao;
 import Repository.FuncionarioDao;
 
 public class EntradaArquivo {
@@ -16,7 +17,7 @@ public class EntradaArquivo {
 			List<Funcionario> listaFuncionarios = new ArrayList<>();
 			List<Dependente> listaDependentes = new ArrayList<>();
 			FuncionarioDao funcionarioDao = new FuncionarioDao();
-		
+			DependenteDao dependenteDao = new DependenteDao();
 			BufferedReader ler = new BufferedReader(new FileReader(path));
 
 			Funcionario atual = null;
@@ -40,7 +41,7 @@ public class EntradaArquivo {
 					funcionarioDao.inserirFuncionario(funcionario);
 					atual = funcionario;
 					ehVazio = true;
-					//System.out.println(atual.toString());
+					
 					
 				} else {
 					String[] lerDependente = linha.split(";", -1);
@@ -49,7 +50,7 @@ public class EntradaArquivo {
 							LocalDate.parse(lerDependente[2]), EnumParentesco.valueOf(lerDependente[3]));
 					
 					listaDependentes.add(dependentes);
-					
+					dependenteDao.inserirDependente(dependentes, null);
 					System.out.println(dependentes.toString());
 				}
 			}
