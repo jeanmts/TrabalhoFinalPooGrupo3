@@ -32,32 +32,31 @@ public class EntradaArquivo {
 				}
 
 				if (ehVazio == false) {
-					String[] lerFuncionario = linha.split(";", -1); 
-					
-					Funcionario funcionario = new Funcionario(lerFuncionario[0], lerFuncionario[1], 
+					String[] lerFuncionario = linha.split(";", -1);
+
+					Funcionario funcionario = new Funcionario(lerFuncionario[0], lerFuncionario[1],
 							LocalDate.parse(lerFuncionario[2]), Double.parseDouble(lerFuncionario[3]));
-					
+
 					listaFuncionarios.add(funcionario);
 					funcionarioDao.inserirFuncionario(funcionario);
 					atual = funcionario;
 					ehVazio = true;
-					
-					
+
 				} else {
 					String[] lerDependente = linha.split(";", -1);
 
-					Dependente dependentes = new Dependente(lerDependente[0], lerDependente[1], 
+					Dependente dependentes = new Dependente(lerDependente[0], lerDependente[1],
 							LocalDate.parse(lerDependente[2]), EnumParentesco.valueOf(lerDependente[3]));
-					
+
 					listaDependentes.add(dependentes);
 					dependenteDao.inserirDependente(dependentes, null);
 					System.out.println(dependentes.toString());
 				}
 			}
 			ler.close();
-			
+
 			System.out.println("Arquivo carregado com sucesso!");
-			
+
 		} catch (IOException e) {
 			System.out.println("Erro na leitura do arquivo\n" + e.getMessage());
 		}

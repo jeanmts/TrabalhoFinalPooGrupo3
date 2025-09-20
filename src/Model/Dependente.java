@@ -6,14 +6,14 @@ import Enum.EnumParentesco;
 
 public class Dependente extends Pessoa {
 	private EnumParentesco parentesco;
-	
-    public Dependente() {
+
+	public Dependente() {
 		super();
 	}
 
-    public Dependente(String nome, String cpf, LocalDate dataNascimento, EnumParentesco parentesco) {
-        super(nome, cpf, dataNascimento);
-        this.parentesco = parentesco;
+	public Dependente(String nome, String cpf, LocalDate dataNascimento, EnumParentesco parentesco) {
+		super(nome, cpf, dataNascimento);
+		this.parentesco = parentesco;
 	}
 
 	public EnumParentesco getParentesco() {
@@ -26,9 +26,8 @@ public class Dependente extends Pessoa {
 
 	@Override
 	public String toString() {
-		return "Nome dependente: " + getNome() + " CPF: " + getCpf()
-		+" Data de nascimento: " + getDataDeNascimento() + " Parentesco: " + getParentesco();
+		return "Nome dependente: " + getNome() + " CPF: " + getCpf() + " Data de nascimento: " + getDataDeNascimento()
+				+ " Parentesco: " + getParentesco();
 	}
-	
-	
+
 }
