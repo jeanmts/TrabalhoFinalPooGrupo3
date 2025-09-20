@@ -1,4 +1,4 @@
-package Entity;
+package Model;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import Enum.EnumParentesco;
+import Repository.FuncionarioDao;
 
 public class EntradaArquivo {
 
@@ -14,7 +15,8 @@ public class EntradaArquivo {
 		try {
 			List<Funcionario> listaFuncionarios = new ArrayList<>();
 			List<Dependente> listaDependentes = new ArrayList<>();
-
+			FuncionarioDao funcionarioDao = new FuncionarioDao();
+		
 			BufferedReader ler = new BufferedReader(new FileReader(path));
 
 			Funcionario atual = null;
@@ -35,9 +37,10 @@ public class EntradaArquivo {
 							LocalDate.parse(lerFuncionario[2]), Double.parseDouble(lerFuncionario[3]));
 					
 					listaFuncionarios.add(funcionario);
+					funcionarioDao.inserirFuncionario(funcionario);
 					atual = funcionario;
 					ehVazio = true;
-					System.out.println(atual.toString());
+					//System.out.println(atual.toString());
 					
 				} else {
 					String[] lerDependente = linha.split(";", -1);

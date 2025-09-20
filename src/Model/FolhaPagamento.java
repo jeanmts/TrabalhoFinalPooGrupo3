@@ -1,8 +1,8 @@
-package Entity;
+package Model;
 
 import java.time.LocalDate;
 
-import interfaceCalculos.CalculosPagamento;
+import Interface.CalculosPagamento;
 
 public class FolhaPagamento implements CalculosPagamento{
 	private int codigo;

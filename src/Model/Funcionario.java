@@ -1,4 +1,4 @@
-package Entity;
+package Model;
 
 import java.time.LocalDate;
 
@@ -43,8 +43,8 @@ public class Funcionario extends Pessoa {
   
 	@Override
 	public String toString() {
-		return "\nFuncionario:\nNome: " + getNome() + " CPF: " + getCpf() + " Data de nascimento: "
-				+ getDataDeNascimento() + " Salario bruto: " + getSalarioBruto() + "\nDependentes:";
+		return "Funcionario: Nome: " + getNome() + " CPF: " + getCpf() + " Data de nascimento: "
+				+ getDataDeNascimento() + " Salario bruto: " + getSalarioBruto();
 
 	}	
 

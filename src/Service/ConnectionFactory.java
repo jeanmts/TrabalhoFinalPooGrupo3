@@ -1,4 +1,4 @@
-package Utils;
+package Service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,7 +8,7 @@ public class ConnectionFactory {
 
 	String url = "jdbc:postgresql://localhost:5432/empresaPoo";
 	String usuario = "postgres";
-	String senha = "postgres";
+	String senha = "99590610";
 	private Connection connection;
 
 	public Connection getConnection() {
