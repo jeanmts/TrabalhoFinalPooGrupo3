@@ -1,4 +1,4 @@
-package Entity;
+package Model;
 
 import java.time.LocalDate;
 
@@ -6,6 +6,10 @@ import Enum.EnumParentesco;
 
 public class Dependente extends Pessoa {
 	private EnumParentesco parentesco;
+	
+    public Dependente() {
+		super();
+	}
 
     public Dependente(String nome, String cpf, LocalDate dataNascimento, EnumParentesco parentesco) {
         super(nome, cpf, dataNascimento);

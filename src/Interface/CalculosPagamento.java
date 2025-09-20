@@ -1,4 +1,4 @@
-package interfaceCalculos;
+package Interface;
 
 public interface CalculosPagamento {
 	    double calcularINSS(double salarioBruto);

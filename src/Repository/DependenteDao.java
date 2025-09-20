@@ -9,10 +9,10 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-import Entity.Dependente;
 import Enum.EnumParentesco;
 import Exception.DependenteException;
-import Utils.ConnectionFactory;
+import Model.Dependente;
+import Service.ConnectionFactory;
 
 public class DependenteDao {
 	private Connection connection;

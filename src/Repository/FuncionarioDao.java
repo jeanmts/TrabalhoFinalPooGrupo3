@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import Entity.Funcionario;
-import Utils.ConnectionFactory;
+import Model.Funcionario;
+import Service.ConnectionFactory;
 
 public class FuncionarioDao {
 	private Connection connection;
 
-	private FuncionarioDao() {
+	public FuncionarioDao() {
 		connection = new ConnectionFactory().getConnection();
 	}
 
@@ -45,14 +45,14 @@ public class FuncionarioDao {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				Funcionario funcionario = new Funcionario(rs.getString("nome"), rs.getString("cpf"),
-						rs.getDate("data_nascimento").toLocalDate(), rs.getDouble("salario_bruto"));
+				Funcionario funcionario = new Funcionario(rs.getString("nome_funcionario"), rs.getString("cpf_funcionario"),
+						rs.getDate("data_de_nascimento_funcionario").toLocalDate(), rs.getDouble("salarioBruto"));
+				System.out.println(funcionario.toString());
 				funcionarios.add(funcionario);
 			}
 			stmt.close();
 			rs.close();
 			connection.close();
-			System.out.println("Listagem de funcionarios.");
 
 		} catch (SQLException e) {
 			System.out.println("Erro ao listar Funcionarios" + e.getMessage());
