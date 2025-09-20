@@ -2,7 +2,9 @@ package Entity;
 
 import java.time.LocalDate;
 
-public class FolhaPagamento {
+import interfaceCalculos.CalculosPagamento;
+
+public class FolhaPagamento implements CalculosPagamento{
 	private int codigo;
 	private Funcionario funcionario;
 	private LocalDate dataPagamento;
@@ -59,16 +61,14 @@ public class FolhaPagamento {
 
 	public double calcularSalarioLiquido(double salarioBruto, int numeroDeDependentes) {
 		
-		double descontoINSS = calcularINSS();
+		double descontoINSS = calcularINSS(salarioBruto);
 		double descontoIR = calcularIR(salarioBruto, numeroDeDependentes);
 		this.salarioLiquido = salarioBruto - descontoINSS - descontoIR;
 		return this.salarioLiquido; 
 
 	}
 
-	public double calcularINSS() {
-		double salarioBruto = funcionario.getSalarioBruto();
-
+	public double calcularINSS(double salarioBruto) {
 		if (salarioBruto <= 1518.00) {
 			return salarioBruto * 0.075;
 		} else if (salarioBruto >= 1518.01 && salarioBruto <= 2793.88) {
