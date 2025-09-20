@@ -17,7 +17,7 @@ import Service.ConnectionFactory;
 public class DependenteDao {
 	private Connection connection;
 
-	private DependenteDao() { 
+	public DependenteDao() { 
 		connection = new ConnectionFactory().getConnection();
 	}
 
