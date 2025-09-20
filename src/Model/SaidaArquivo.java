@@ -5,9 +5,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class SaidaArquivo {
-	
-	public void escritorArquivo(String path, Funcionario funcionario,FolhaPagamento pgto) {
-		
+
+	public void escritorArquivo(String path, Funcionario funcionario, FolhaPagamento pgto) {
+
 		try {
 			BufferedWriter escritor = new BufferedWriter(new FileWriter(path + "tabela.csv"));
 			escritor.append(funcionario.getNome() + ";");
