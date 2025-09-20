@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import Entity.Dependente;
@@ -18,48 +17,47 @@ import Utils.ConnectionFactory;
 public class DependenteDao {
 	private Connection connection;
 
-	private DependenteDao() {
+	private DependenteDao() { 
 		connection = new ConnectionFactory().getConnection();
 	}
 
-	public void inserirDependente(Dependente dependente, Integer id_funcionario)  {
+	public void inserirDependente(Dependente dependente, Integer id_funcionario) {
 		LocalDate data = LocalDate.now();
 		int idade = Period.between(dependente.getDataDeNascimento(), data).getYears();
-		if (idade >=18){			
-			throw new DependenteException("Erro: Depedente não pode ser cadastrado pois é maior de idade."); 
+		if (idade >= 18) {
+			throw new DependenteException("Erro: Depedente não pode ser cadastrado pois é maior de idade.");
 		}
-		
-		String sql = "insert into dependente(nome_dependente, " + "cpf_dependente, "
-				+ "data_de_nascimento_dependente, " + "parentesco_dependente, "+" id_funcionario_func") values (?,?,?,?)";
+
+		String sql = "insert into dependentes(nome_dependente, " + "cpf_dependente, "
+				+ "data_de_nascimento_dependente, " + "parentesco_dependente, "
+				+ " id_funcionario_func) values (?,?,?,?,?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, dependente.getNome());
 			stmt.setString(2, dependente.getCpf());
-			stmt.setString(3, dependente.getDataDeNascimento().toString());
+			stmt.setDate(3, java.sql.Date.valueOf(dependente.getDataDeNascimento()));
 			stmt.setString(4, dependente.getParentesco().toString());
 			stmt.setInt(5, id_funcionario);
 			stmt.execute();
 			stmt.close();
-			connection.close();
+			connection.close(); 
 			System.out.println("Dependente criado com sucesso!");
 		} catch (SQLException e) {
-			System.out.println("Erro ao cadastrar dependente!");
+			System.out.println("Erro ao cadastrar dependente!" + e.getMessage());
 		}
 	}
 
 	public List<Dependente> listarDependentes() {
-		String sql = "select * from dependente";
+		String sql = "select * from dependentes";
 		List<Dependente> dependentes = new ArrayList<>();
 
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				EnumParentesco parentesco = EnumParentesco.valueOf(rs.getString("parentesco"));
-				Dependente dependente = new Dependente(rs.getString("nome"), 
-						rs.getString("cpf"),
-						rs.getDate("data_nascimento").toLocalDate(), 
-						parentesco);
+				EnumParentesco parentesco = EnumParentesco.valueOf(rs.getString("parentesco_dependente"));
+				Dependente dependente = new Dependente(rs.getString("nome_dependente"), rs.getString("cpf_dependente"),
+						rs.getDate("data_de_nascimento_dependente").toLocalDate(), parentesco);
 				dependentes.add(dependente);
 			}
 			stmt.close();
@@ -68,45 +66,41 @@ public class DependenteDao {
 			System.out.println("Listagem de dependente.");
 
 		} catch (SQLException e) {
-			System.out.println("Erro ao listar Dependente");
+			System.out.println("Erro ao listar Dependente" + e.getMessage());
 		}
 		return dependentes;
 	}
-	
-	public void atualizarDependente(Dependente dependente) {
-		String sql = "update funcionario set nome_funcionario=?, "
-				+ "cpf_funcionario=?, "
-				+ "data_de_nascimento_funcionario=?, "
-				+ "salarioBruto=?";
+
+	public void atualizarDependente(Dependente dependente) { 
+		String sql = "update dependentes set nome_dependente=?, " + "cpf_dependente=?, "
+				+ "data_de_nascimento_dependente=?, " + "parentesco_dependente=?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setString(1, funcionario.getNome());
-			stmt.setString(2, funcionario.getCpf());
-			stmt.setString(3, funcionario.getDataDeNascimento().toString());
-			stmt.setDouble(4, funcionario.getSalarioBruto());
+			stmt.setString(1, dependente.getNome()); 
+			stmt.setString(2, dependente.getCpf());
+			stmt.setDate(3, java.sql.Date.valueOf(dependente.getDataDeNascimento()));
+			stmt.setString(4, dependente.getParentesco().name());
 			stmt.execute();
 			stmt.close();
 			connection.close();
-			System.out.println("Funcionario atualizado com sucesso!");
+			System.out.println("Dependente atualizado com sucesso!");
 		} catch (SQLException e) {
-			System.out.println("Erro ao atualizar Funcionario!");
+			System.out.println("Erro ao atualizar Dependente!" + e.getMessage());
 		}
 	}
-		public void removerFuncionario(int id_funcionario) {
-			String sql = "delete from funcionario where id_funcionario=?";
-			try {
-				PreparedStatement stmt = connection.prepareStatement(sql);
-				stmt.setInt(1, id_funcionario);
-				stmt.execute();
-				stmt.close();
-				connection.close();
-				System.out.println("Funcionario deletado com sucesso!");
-			} catch (SQLException e) {
-				System.err.println("Erro ao remover!");
-			}
-		
+
+	public void removerDependente(int id_dependente) { 
+		String sql = "delete from dependentes where id_dependente=?";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setInt(1, id_dependente);
+			stmt.execute();
+			stmt.close();
+			connection.close();
+			System.out.println("Dependente deletado com sucesso!");
+		} catch (SQLException e) {
+			System.err.println("Erro ao remover!" + e.getMessage());
+		}
+
 	}
-
-	
-
 }
