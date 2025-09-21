@@ -35,7 +35,7 @@ public class DependenteDao {
 			if (rs.next()) { // verificar se achou
 		        func = new Funcionario(rs.getInt("id_funcionario"));
 		    }
-			
+			 
 			stmt.close();
 			rs.close();
 
@@ -83,7 +83,6 @@ public class DependenteDao {
 			stmt.close();
 			rs.close();
 			System.out.println("Listagem de dependente.");
-
 		} catch (SQLException e) {
 			System.out.println("Erro ao listar Dependente" + e.getMessage());
 		}

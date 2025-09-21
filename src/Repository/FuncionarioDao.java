@@ -42,10 +42,12 @@ public class FuncionarioDao {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				Funcionario funcionario = new Funcionario(rs.getString("nome_funcionario"),
-						rs.getString("cpf_funcionario"), rs.getDate("data_de_nascimento_funcionario").toLocalDate(),
+				Funcionario funcionario = new Funcionario(
+						rs.getInt("id_funcionario"),
+						rs.getString("nome_funcionario"),
+						rs.getString("cpf_funcionario"), 
+						rs.getDate("data_de_nascimento_funcionario").toLocalDate(),
 						rs.getDouble("salarioBruto"));
-				System.out.println(funcionario.toString());
 				funcionarios.add(funcionario);
 			}
 			stmt.close();

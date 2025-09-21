@@ -1,37 +1,97 @@
 package Main;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
 import Enum.EnumParentesco;
 import Exception.DependenteException;
 import Model.Dependente;
-import Model.EntradaArquivo;
 import Model.FolhaPagamento;
 import Model.Funcionario;
+import Model.SaidaArquivo;
 import Repository.DependenteDao;
 import Repository.FolhaPagamentoDao;
 import Repository.FuncionarioDao;
 
 public class Aplicacao {
-	public static void main(String[] args) throws DependenteException {
+	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		sc.useLocale(Locale.US);
 
 		System.out.println("===== Nome Empresa =====");
 		System.out.println("Informe o endereço e o nome do arquivo: (com a extensão) ");
 		try {
+			String path = sc.nextLine();
+			BufferedReader ler = new BufferedReader(new FileReader(path));
 			
-			EntradaArquivo entrada = new EntradaArquivo();
-
-			entrada.lerArquivo(sc.nextLine());
-
+			List<Funcionario> listaFuncionarios = new ArrayList<>();
+			List<Dependente> listaDependentes = new ArrayList<>();
+			List<FolhaPagamento> listaFolhaPagamentos = new ArrayList<>();
+			
 			FuncionarioDao funcionarioDao = new FuncionarioDao();
 			DependenteDao dependenteDao = new DependenteDao();
-			FolhaPagamentoDao folhaPagamentoDao = new FolhaPagamentoDao();
 			FolhaPagamento folha = new FolhaPagamento();
+			
+			Funcionario atual = null;
+			boolean ehVazio = false;
+			Funcionario funcionario = null;
+			
+			FolhaPagamento folhaPgto = null;
+			FolhaPagamentoDao folhaPagamentoDao = null;
+			
+			
+			
+			while (ler.ready()) {
+				String linha = ler.readLine().trim();
 
+				if (linha.isBlank()) {
+					ehVazio = false;
+					continue;
+				}
+				
+				if (ehVazio == false) {
+					String[] lerFuncionario = linha.split(";", -1);
+					
+					funcionario = new Funcionario(lerFuncionario[0], lerFuncionario[1],
+							LocalDate.parse(lerFuncionario[2]), Double.parseDouble(lerFuncionario[3]));
+									
+					listaFuncionarios.add(funcionario);
+					funcionarioDao.inserirFuncionario(funcionario);
+					
+					folhaPgto = new FolhaPagamento(funcionarioDao.listarFuncionarios().get(0).getId_funcionario(), funcionario, LocalDate.now());
+	
+					for(int i = 0; i < funcionarioDao.listarFuncionarios().size(); i++) {
+						if(funcionario.getCpf().trim().equals(funcionarioDao.listarFuncionarios().get(i).getCpf().trim()) ) {							
+							folhaPagamentoDao = new FolhaPagamentoDao();
+							folhaPagamentoDao.inserirFolhapagamento(funcionarioDao.listarFuncionarios().get(i).getId_funcionario(), folhaPgto, listaDependentes.size());
+		
+							listaFolhaPagamentos.add(folhaPgto);					
+						} else {
+							System.out.println("Aguarde alguns instantes...");
+						}	
+					}					
+					atual = funcionario;
+					ehVazio = true;
+					
+				} else {
+					String[] lerDependente = linha.split(";", -1);
+
+					Dependente dependentes = new Dependente(lerDependente[0], lerDependente[1],
+							LocalDate.parse(lerDependente[2]), EnumParentesco.valueOf(lerDependente[3]));
+
+					listaDependentes.add(dependentes);
+					dependenteDao.inserirDependente(dependentes, atual.getCpf());
+				}
+			}
+			
+			
+			
 			int opcoesFunc = -1;
 			while (opcoesFunc != 0) {			
 				System.out.println("Opções:\n " + "1- Listar funcionários\n" + "2 - Atualizar Funcionário\n"
@@ -42,7 +102,7 @@ public class Aplicacao {
 				switch (opcoesFunc) {
 				case 1:
 					System.out.println("Listando todos os funcionários.");
-					funcionarioDao.listarFuncionarios();
+					listaFuncionarios.toString();
 					break;
 
 				case 2:
@@ -58,10 +118,9 @@ public class Aplicacao {
 					System.out.print("Digite o ID do funcionario: ");
 					Integer idFuncionario = sc.nextInt();
 					sc.nextLine();
-					Funcionario funcionario = new Funcionario(nome, cpf, dataDeNascimento, salarioBruto);
-					funcionarioDao.atualizarFuncionario(funcionario, idFuncionario);
+					Funcionario func = new Funcionario(nome, cpf, dataDeNascimento, salarioBruto);
+					funcionarioDao.atualizarFuncionario(func, idFuncionario);
 					break;
-
 				case 3:
 					System.out.println("Excluindo funcionário");
 					System.out.print("Digite o ID que quer excluir: ");
@@ -141,7 +200,7 @@ public class Aplicacao {
 		            System.out.print("Digite o ID da folha que irá atualizar: ");
 		            int idFolha = sc.nextInt();
 		            sc.nextLine();
-		            folhaPagamentoDao.atualizarFolhaPagamento(folha, idFolha);
+		            folhaPagamentoDao.atualizarFolhaPagamento(folhaPgto, idFolha);
 		            System.out.println("Folha de pagamento atualizada com sucesso!");
 		            break;
 				case 3:
@@ -159,12 +218,22 @@ public class Aplicacao {
 					System.out.println("Opção inválida");
 				}
 			}
+			
+			
+			System.out.println("Adicione o local para salvar o arquivo: ");
+			String pathSaida = sc.nextLine();
+			SaidaArquivo saidaArquivo = new SaidaArquivo();
+			
+			System.out.println(listaFuncionarios.get(0));
+			saidaArquivo.escritorArquivo(pathSaida, listaFuncionarios, listaFolhaPagamentos);
+//			funcionarioDao.fecharPrograma();
 			sc.close();
-			funcionarioDao.fecharPrograma();
 		} catch (DependenteException e) {
 			System.out.println(e.getMessage());
-		} catch (Exception e) {
-			System.out.println("Erro inesperado! " + e.getMessage());
+		} catch (IOException e ) {
+			System.out.println("Erro na leitura do arquivo\n" + e.getMessage());
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println(e.getMessage());
 		}
 
 	}
