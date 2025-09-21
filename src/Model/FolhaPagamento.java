@@ -102,4 +102,13 @@ public class FolhaPagamento implements CalculosPagamento{
 			return valorADeduzir;
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "Codigo: " + codigo + "\nFuncionario: " + funcionario 
+				+ "Data de Pagamento: " + dataPagamento
+				+ "SalarioLiquido: " + salarioLiquido + "\n";
+	}
+	
+	
 }
