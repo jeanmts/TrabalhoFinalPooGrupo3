@@ -5,11 +5,11 @@ import java.time.LocalDate;
 import Interface.CalculosPagamento;
 
 public class FolhaPagamento implements CalculosPagamento{
-	private int codigo;
+	private int id_funcionario;
 	private Funcionario funcionario;
 	private LocalDate dataPagamento;
 	private double salarioLiquido;
-
+	private int numDependentes;
 	
 	public FolhaPagamento() {
 		super();
@@ -20,19 +20,19 @@ public class FolhaPagamento implements CalculosPagamento{
 		this.funcionario = funcionario;
 	}
 
-	public FolhaPagamento(Integer codigo, Funcionario funcionario, LocalDate dataPagamento) {
+	public FolhaPagamento(Integer id_funcionario, Funcionario funcionario, LocalDate dataPagamento) {
 		super();
-		this.codigo = codigo;
+		this.id_funcionario = id_funcionario;
 		this.funcionario = funcionario;
 		this.dataPagamento = dataPagamento;
 	}
 
-	public int getCodigo() {
-		return codigo;
+	public int setId_funcionario() {
+		return id_funcionario;
 	}
 
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
+	public void setId_funcionario(int id_funcionario) {
+		this.id_funcionario = id_funcionario;
 	}
 
 	public Funcionario getFuncionario() {
@@ -58,56 +58,68 @@ public class FolhaPagamento implements CalculosPagamento{
 	public void setSalarioLiquido(double salarioLiquido) {
 		this.salarioLiquido = salarioLiquido;
 	}
+	
 
-	public double calcularSalarioLiquido(double salarioBruto, int numeroDeDependentes) {
-		
-		double descontoINSS = calcularINSS(salarioBruto);
-		double descontoIR = calcularIR(salarioBruto, numeroDeDependentes);
-		this.salarioLiquido = salarioBruto - descontoINSS - descontoIR;
-		return this.salarioLiquido; 
-
+	public int getNumDependentes() {
+		return numDependentes;
 	}
 
-	public double calcularINSS(double salarioBruto) {
-		if (salarioBruto <= 1518.00) {
-			return salarioBruto * 0.075;
-		} else if (salarioBruto >= 1518.01 && salarioBruto <= 2793.88) {
-			return (salarioBruto * 0.09) - 22.77;
-		} else if (salarioBruto >=2793.89 && salarioBruto <= 4190.83) {
-			return (salarioBruto * 0.12) - 106.60;
-		} else if (salarioBruto >= 4190.84 && salarioBruto <= 8157.41) {
-			return (salarioBruto * 0.14) - 190.42;
+	public void setNumDependentes(int numDependentes) {
+		this.numDependentes = numDependentes;
+	}
+
+
+	public double calcularINSS() {
+		if (funcionario.getSalarioBruto() <= 1518.00) {
+			return funcionario.getSalarioBruto() * 0.075;
+		} else if (funcionario.getSalarioBruto() >= 1518.01 && funcionario.getSalarioBruto() <= 2793.88) {
+			return (funcionario.getSalarioBruto() * 0.09) - 22.77;
+		} else if (funcionario.getSalarioBruto() >=2793.89 && funcionario.getSalarioBruto() <= 4190.83) {
+			return (funcionario.getSalarioBruto() * 0.12) - 106.60;
+		} else if (funcionario.getSalarioBruto() >= 4190.84 && funcionario.getSalarioBruto() <= 8157.41) {
+			return (funcionario.getSalarioBruto() * 0.14) - 190.42;
 		} else {
 			return 951.62;
 		}
 	}
 
-	public double calcularIR(double salarioBruto, int numeroDeDependentes) {
+	public double calcularIR() {
 
-		double salarioMaisDependentes = salarioBruto + (numeroDeDependentes * 189.59);
+		double salarioMaisDependentes = funcionario.getSalarioBruto(); 
 
 		if (salarioMaisDependentes >= 2259.21 && salarioMaisDependentes <= 2826.65) {
-			double valorADeduzir = (salarioMaisDependentes * 1.075) - salarioMaisDependentes ;
+			double valorADeduzir = ((funcionario.getSalarioBruto() - (numDependentes * 189.59) - calcularINSS()) * 0.075) - 169.44;
 			return valorADeduzir;
 		
 		} else if (salarioMaisDependentes >= 2826.66 && salarioMaisDependentes <= 3751.05) {
-			double valorADeduzir =(salarioMaisDependentes * 1.15) - salarioMaisDependentes ;
+			double valorADeduzir = ((funcionario.getSalarioBruto() - (numDependentes * 189.59) - calcularINSS()) * 0.15) - 381.44;
 			return valorADeduzir;
 		
 		} else if(salarioMaisDependentes >= 3751.06 && salarioMaisDependentes < 4664.68) {
-			double valorADeduzir =(salarioMaisDependentes * 1.225) - salarioMaisDependentes;
+			double valorADeduzir = ((funcionario.getSalarioBruto() - (numDependentes * 189.59) - calcularINSS()) * 0.225) - 662.77;
+			return valorADeduzir;
+		} else if(salarioMaisDependentes > 4664.68) {
+			double valorADeduzir = ((funcionario.getSalarioBruto() - (numDependentes * 189.59) - calcularINSS()) * 0.275) - 896.00;
 			return valorADeduzir;
 		} else {
-			double valorADeduzir = (salarioMaisDependentes * 1.275) - salarioMaisDependentes;
-			return valorADeduzir;
+			return 0.0;
 		}
 	}
+	
+	public double calcularSalarioLiquido(double salarioBruto, int numeroDeDependentes) {
+			double descontoINSS = calcularINSS();
+			double descontoIR = calcularIR();
+			this.salarioLiquido = salarioBruto - descontoINSS - descontoIR;
+			return this.salarioLiquido; 
+		}
 
 	@Override
 	public String toString() {
-		return "Codigo: " + codigo + "\nFuncionario: " + funcionario 
-				+ "Data de Pagamento: " + dataPagamento
-				+ "SalarioLiquido: " + salarioLiquido + "\n";
+		return "---------FOLHA DE PAGAMENTO---------"
+				+ "\nFuncionario: " + funcionario.getNome() 
+				+ ", CPF: " + funcionario.getCpf() + ", Desconto Inss: R$" +String.format("%.2f", calcularINSS()) 
+				+ ", Desconto IR: R$" + String.format("%.2f",calcularIR())  
+				+ ", SalarioLiquido: R$" + String.format("%.2f",salarioLiquido) + "\n";
 	}
 	
 	

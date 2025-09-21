@@ -1,7 +1,7 @@
 package Interface;
 
 public interface CalculosPagamento {
-	    double calcularINSS(double salarioBruto);
-	    double calcularIR(double salarioBruto, int numeroDependentes);
+	    double calcularINSS();
+	    double calcularIR();
 	    double calcularSalarioLiquido(double salarioBruto, int numeroDependentes);
 }

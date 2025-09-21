@@ -18,22 +18,21 @@ public class FolhaPagamentoDao {
 		connection = new ConnectionFactory().getConnection();
 	}
 
-	public void inserirFolhapagamento(Funcionario funcionario, FolhaPagamento folhaP, int id_funcionario) {
-		String sql = "insert into folha_pagamento(id_funcionario,"
-				+ "data_pagamento, desconto_inss, desconto_ir, salario_liquido) " + "VALUES (?,?,?,?,?)";
+	public void inserirFolhapagamento(int id_funcionario, FolhaPagamento folhaP, int qtdeDependentes) {
+		String sql = "insert into FolhaPagamento(id_funcionario_func,"
+				+ "data_pagamento, desconto_inss, desconto_ir, salarioLiquido) " + "VALUES (?,?,?,?,?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, id_funcionario);
 			stmt.setDate(2, java.sql.Date.valueOf(folhaP.getDataPagamento()));
-			stmt.setDouble(3, folhaP.getFuncionario().getDescontoInss());
-			stmt.setDouble(4, folhaP.getFuncionario().getDescontoIR());
-			stmt.setDouble(5, folhaP.getSalarioLiquido());
+			stmt.setDouble(3, folhaP.calcularINSS());
+			stmt.setDouble(4, folhaP.calcularIR());
+			stmt.setDouble(5, folhaP.calcularSalarioLiquido(folhaP.getFuncionario().getSalarioBruto(), qtdeDependentes));
 			stmt.execute();
 			stmt.close();
-			connection.close();
 			System.out.println("Folha de pagamento criada com sucesso!");
 		} catch (SQLException e) {
-			System.out.println("Erro ao cadastrar Folha de pagamento!");
+			System.out.println("Erro ao cadastrar Folha de pagamento!" + e.getMessage());
 		}
 	}
 
@@ -45,7 +44,7 @@ public class FolhaPagamentoDao {
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				FolhaPagamento folhaP = new FolhaPagamento();
-				folhaP.setCodigo(rs.getInt("id_folha"));
+				folhaP.setId_funcionario(rs.getInt("id_folha"));
 				folhaP.setDataPagamentoo(rs.getDate("data_pagamento").toLocalDate());
 				folhaP.setSalarioLiquido(rs.getDouble("salario_liquido"));
 
@@ -57,7 +56,6 @@ public class FolhaPagamentoDao {
 			}
 			stmt.close();
 			rs.close();
-			connection.close();
 			System.out.println("Listagem das Folhas de Pagamentos.");
 
 		} catch (SQLException e) {
@@ -78,8 +76,8 @@ public class FolhaPagamentoDao {
 			stmt.setDouble(5, id_folha);
 			stmt.execute();
 			stmt.close();
-			connection.close();
 			System.out.println("Folha de Pagamento atualizado com sucesso!");
+			System.out.println( folhaP.toString());
 		} catch (SQLException e) {
 			System.out.println("Erro ao atualizar Folha de Pagamento!");
 		}
@@ -92,7 +90,6 @@ public class FolhaPagamentoDao {
 			stmt.setInt(1, id_folha);
 			stmt.execute();
 			stmt.close();
-			connection.close();
 			System.out.println("Folha de pagamento removida com sucesso!");
 		} catch (SQLException e) {
 			System.err.println("Erro ao remover folha de pagamento!");
