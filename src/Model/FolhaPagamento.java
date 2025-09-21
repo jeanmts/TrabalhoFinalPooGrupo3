@@ -10,6 +10,7 @@ public class FolhaPagamento implements CalculosPagamento{
 	private LocalDate dataPagamento;
 	private double salarioLiquido;
 	private int numDependentes;
+	private int id_folha;
 	
 	public FolhaPagamento() {
 		super();
@@ -27,7 +28,7 @@ public class FolhaPagamento implements CalculosPagamento{
 		this.dataPagamento = dataPagamento;
 	}
 
-	public int setId_funcionario() {
+	public int getId_funcionario() {
 		return id_funcionario;
 	}
 
@@ -66,6 +67,13 @@ public class FolhaPagamento implements CalculosPagamento{
 
 	public void setNumDependentes(int numDependentes) {
 		this.numDependentes = numDependentes;
+	}
+	public int getId_folha() {
+		return id_folha;
+	}
+	
+	public void setId_folha(int id_folha) {
+		this.id_folha = id_folha;
 	}
 
 
@@ -115,12 +123,12 @@ public class FolhaPagamento implements CalculosPagamento{
 
 	@Override
 	public String toString() {
-		return "---------FOLHA DE PAGAMENTO---------"
-				+ "\nFuncionario: " + funcionario.getNome() 
-				+ ", CPF: " + funcionario.getCpf() + ", Desconto Inss: R$" +String.format("%.2f", calcularINSS()) 
-				+ ", Desconto IR: R$" + String.format("%.2f",calcularIR())  
-				+ ", SalarioLiquido: R$" + String.format("%.2f",salarioLiquido) + "\n";
+	    return "---------FOLHA DE PAGAMENTO---------"
+	            + "\nID Folha: " + id_folha
+	            + "\nFuncionario ID: " + id_funcionario
+	            + "\nDesconto INSS: R$" + funcionario.getDescontoInss()
+	            + "\nDesconto IR: R$" + funcionario.getDescontoIR()
+	            + "\nSalário Líquido: R$" + salarioLiquido + "\n";
 	}
-	
 	
 }
