@@ -40,33 +40,36 @@ public class FolhaPagamentoDao {
 		String sql = "select * from FolhaPagamento";
 		List<FolhaPagamento> folhasP = new ArrayList<>();
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				FolhaPagamento folhaP = new FolhaPagamento();
-				folhaP.setId_funcionario(rs.getInt("id_folha"));
-				folhaP.setDataPagamentoo(rs.getDate("data_pagamento").toLocalDate());
-				folhaP.setSalarioLiquido(rs.getDouble("salario_liquido"));
+	        PreparedStatement stmt = connection.prepareStatement(sql);
+	        ResultSet rs = stmt.executeQuery();
+	        while (rs.next()) {
+	            FolhaPagamento folhaP = new FolhaPagamento();
 
-				Funcionario f = new Funcionario();
-				f.setDescontoInss(rs.getDouble("desconto_inss"));
-				f.setDescontoIR(rs.getDouble("desconto_ir"));
-				folhaP.setFuncionario(f);
-				folhasP.add(folhaP);
-			}
-			stmt.close();
-			rs.close();
-			System.out.println("Listagem das Folhas de Pagamentos.");
+	            folhaP.setId_folha(rs.getInt("id_folha"));
+	            folhaP.setId_funcionario(rs.getInt("id_funcionario_func"));
+	            folhaP.setDataPagamentoo(rs.getDate("data_pagamento").toLocalDate());
+	            folhaP.setSalarioLiquido(rs.getDouble("salarioLiquido"));
 
-		} catch (SQLException e) {
-			System.out.println("Erro ao listar Folhas de Pagamento");
-		}
-		return folhasP;
+	            Funcionario f = new Funcionario();
+	            f.setDescontoInss(rs.getDouble("desconto_inss"));
+	            f.setDescontoIR(rs.getDouble("desconto_ir"));
+
+	            folhaP.setFuncionario(f);
+
+	            folhasP.add(folhaP);
+	        }
+	        rs.close();
+	        stmt.close();
+	        System.out.println("Listagem das Folhas de Pagamentos concluída.");
+	    } catch (SQLException e) {
+	        System.out.println("Erro ao listar Folhas de Pagamento: " + e.getMessage());
+	    }
+	    return folhasP;
 	}
 
 	public void atualizarFolhaPagamento(FolhaPagamento folhaP, int id_folha) {
 		String sql = "update FolhaPagamento set data_pagamento=?, " + "desconto_INSS=?, " + "desconto_IR=?, "
-				+ "salario_liquido=? where id_folha=?";
+				+ "salarioLiquido=? where id_folha=?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setDate(1, java.sql.Date.valueOf(folhaP.getDataPagamento()));

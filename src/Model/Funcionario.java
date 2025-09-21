@@ -20,8 +20,7 @@ public class Funcionario extends Pessoa {
 
 	}
 
-	
-	public Funcionario(String nome, String cpf, LocalDate dataDeNascimento,double salarioBruto) {
+	public Funcionario(String nome, String cpf, LocalDate dataDeNascimento, double salarioBruto) {
 		super(nome, cpf, dataDeNascimento);
 		this.salarioBruto = salarioBruto;
 	}
@@ -31,7 +30,6 @@ public class Funcionario extends Pessoa {
 		this.id_funcionario = id_funcionario;
 		this.salarioBruto = salarioBruto;
 	}
-
 
 	public double getSalarioBruto() {
 		return salarioBruto;
@@ -65,7 +63,6 @@ public class Funcionario extends Pessoa {
 		this.id_funcionario = id_funcionario;
 	}
 
-	
 	public int getQtde_dependentes() {
 		return qtde_dependentes;
 	}

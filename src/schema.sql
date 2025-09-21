@@ -1,4 +1,3 @@
-create database empresaPoo; 
 create table Funcionario (
 id_funcionario serial primary key,
 nome_funcionario varchar(100) not null,
@@ -19,11 +18,22 @@ foreign key (id_funcionario_func) references funcionario (id_funcionario) on del
 
 create table FolhaPagamento (
 id_folha serial primary key,
-id_funcionario int not null,
 data_pagamento date not null,
 desconto_INSS numeric(10,2) not null,
 desconto_IR numeric(10,2) not null,
 id_funcionario_func int not null,
-salarioLiquido numeric(10,2) not null,
+salarioLiquido numeric(10,2) not null
 foreign key (id_funcionario_func) references funcionario (id_funcionario) on delete cascade
 );
+
+select * from funcionario f;
+select * from dependentes d ;
+select * from folhapagamento f ;
+
+delete from funcionario;
+delete from dependentes;
+delete from folhapagamento;
+
+ALTER TABLE FolhaPagamento
+DROP COLUMN id_funcionario;
+
