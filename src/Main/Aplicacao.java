@@ -1,6 +1,7 @@
 package Main;
 
 import java.time.LocalDate;
+import java.util.Locale;
 import java.util.Scanner;
 
 import Enum.EnumParentesco;
@@ -16,6 +17,7 @@ import Repository.FuncionarioDao;
 public class Aplicacao {
 	public static void main(String[] args) throws DependenteException {
 		Scanner sc = new Scanner(System.in);
+		sc.useLocale(Locale.US);
 
 		System.out.println("===== Nome Empresa =====");
 		System.out.println("Informe o endereço e o nome do arquivo: (com a extensão) ");
@@ -33,7 +35,7 @@ public class Aplicacao {
 			int opcoesFunc = -1;
 			while (opcoesFunc != 0) {			
 				System.out.println("Opções:\n " + "1- Listar funcionários\n" + "2 - Atualizar Funcionário\n"
-						+ "3- Remover funcionário\n");
+						+ "3- Remover funcionário\n"+ "0- Sair");
 				opcoesFunc = sc.nextInt();
 				sc.nextLine();
 
@@ -66,6 +68,12 @@ public class Aplicacao {
 					Integer id = sc.nextInt();
 					sc.nextLine();
 					funcionarioDao.removerFuncionario(id);
+					break;
+					
+				case 0:
+					System.out.println("Voce será redirecionado para dependentes");
+					break;
+				
 				default:
 					System.out.println("Opção inválida");
 				}
@@ -99,7 +107,6 @@ public class Aplicacao {
 					Dependente dependente = new Dependente(nome, cpf, dataDeNascimento,
 							EnumParentesco.valueOf(parentesco));
 					dependenteDao.atualizarDependente(dependente, id_dependente);
-					;
 					break;
 				case 3:
 					System.out.println("Excluindo Dependente");
@@ -107,24 +114,12 @@ public class Aplicacao {
 					Integer id = sc.nextInt();
 					sc.nextLine();
 					dependenteDao.removerDependente(id);
-				case 5: //eu
-					System.out.println("Atualização de Folha de Pagamento");
-		            System.out.print("Digite o ID da folha que irá atualizar: ");
-		            int idFolha = sc.nextInt();
-		            sc.nextLine();
-		            folhaPagamentoDao.atualizarFolhaPagamento(folha, idFolha);
-		            System.out.println("Folha de pagamento atualizada com sucesso!");
-		            break;
-				case 6:
-					System.out.println("Remover Folha de Pagamento");
-					System.out.print("Digite o ID da folha que deseja remover: ");
-				    int idFolhaRemover = sc.nextInt();
-				    sc.nextLine();
-				    folhaPagamentoDao.removerFolhaPagamento(idFolhaRemover);
-				    System.out.println("Folha de pagamento removida com sucesso!");
-				    break;
-				default:
-					System.out.println("Opção inválida");
+					break;
+				default: System.out.println("Opção inválida");
+				
+				case 0:
+					System.out.println("Voce será redirecionado para Folha de Pagamento");
+					break;
 				}
 			}
 			
@@ -157,11 +152,15 @@ public class Aplicacao {
 				    folhaPagamentoDao.removerFolhaPagamento(idFolhaRemover);
 				    System.out.println("Folha de pagamento removida com sucesso!");
 				    break;
+				case 0:
+					System.out.println("Programa Encerrado");
+					break;
 				default:
 					System.out.println("Opção inválida");
 				}
 			}
 			sc.close();
+			funcionarioDao.fecharPrograma();
 		} catch (DependenteException e) {
 			System.out.println(e.getMessage());
 		} catch (Exception e) {
