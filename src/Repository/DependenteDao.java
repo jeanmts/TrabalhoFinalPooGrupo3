@@ -61,7 +61,6 @@ public class DependenteDao {
 			stmt.setInt(5, func.getId_funcionario());
 			stmt.execute();
 			stmt.close();
-			connection.close();
 			System.out.println("Dependente criado com sucesso!");
 		} catch (SQLException e) {
 			System.out.println("Erro ao cadastrar dependente!" + e.getMessage());
@@ -83,7 +82,6 @@ public class DependenteDao {
 			}
 			stmt.close();
 			rs.close();
-			connection.close();
 			System.out.println("Listagem de dependente.");
 
 		} catch (SQLException e) {
@@ -93,8 +91,11 @@ public class DependenteDao {
 	}
 
 	public void atualizarDependente(Dependente dependente, Integer id_dependente) {
-		String sql = "update dependentes set nome_dependente=?, " + "cpf_dependente=?, "
-				+ "data_de_nascimento_dependente=?, " + "parentesco_dependente=?" + "where id_dependente=?";
+		String sql = "UPDATE dependentes SET nome_dependente=?, "
+		           + "cpf_dependente=?, "
+		           + "data_de_nascimento_dependente=?, "
+		           + "parentesco_dependente=? "
+		           + "WHERE id_dependente=?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, dependente.getNome());
@@ -104,7 +105,6 @@ public class DependenteDao {
 			stmt.setInt(5, id_dependente);
 			stmt.execute();
 			stmt.close();
-			connection.close();
 			System.out.println("Dependente atualizado com sucesso!");
 		} catch (SQLException e) {
 			System.out.println("Erro ao atualizar Dependente!" + e.getMessage());
@@ -118,7 +118,6 @@ public class DependenteDao {
 			stmt.setInt(1, id_dependente);
 			stmt.execute();
 			stmt.close();
-			connection.close();
 			System.out.println("Dependente deletado com sucesso!");
 		} catch (SQLException e) {
 			System.err.println("Erro ao remover!" + e.getMessage());

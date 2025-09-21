@@ -28,7 +28,6 @@ public class FuncionarioDao {
 			stmt.setDouble(4, funcionario.getSalarioBruto());
 			stmt.execute();
 			stmt.close();
-			connection.close();
 			System.out.println("Funcionario criado com sucesso!");
 		} catch (SQLException e) {
 			System.out.println("Erro ao cadastrar funcionario!" + e.getMessage());
@@ -51,8 +50,6 @@ public class FuncionarioDao {
 			}
 			stmt.close();
 			rs.close();
-			connection.close();
-
 		} catch (SQLException e) {
 			System.out.println("Erro ao listar Funcionarios" + e.getMessage());
 		}
@@ -60,8 +57,8 @@ public class FuncionarioDao {
 	}
 
 	public void atualizarFuncionario(Funcionario funcionario, Integer idFuncionario) {
-		String sql = "update funcionario set nome_funcionario=?, " + "cpf_funcionario=?, "
-				+ "data_de_nascimento_funcionario=?, " + "salarioBruto=?" + "where id_funcionario =?";
+		String sql = "UPDATE funcionario SET nome_funcionario=?, " + "cpf_funcionario=?, "
+				+ "data_de_nascimento_funcionario=?, " + "salarioBruto=? " + "WHERE id_funcionario=?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, funcionario.getNome());
@@ -71,10 +68,10 @@ public class FuncionarioDao {
 			stmt.setInt(5, idFuncionario);
 			stmt.execute();
 			stmt.close();
-			connection.close();
 			System.out.println("Funcionario atualizado com sucesso!");
 		} catch (SQLException e) {
 			System.out.println("Erro ao atualizar Funcionario!" + e.getMessage());
+		} finally {
 		}
 	}
 
@@ -85,10 +82,17 @@ public class FuncionarioDao {
 			stmt.setInt(1, id_funcionario);
 			stmt.execute();
 			stmt.close();
-			connection.close();
 			System.out.println("Funcionario deletado com sucesso!");
 		} catch (SQLException e) {
 			System.err.println("Erro ao remover!" + e.getMessage());
+		}
+	}
+
+	public void fecharPrograma() {
+		try {
+			connection.close();
+		} catch (Exception e) {
+			System.out.println("Erro ao encerrar conexão" + e.getMessage());
 		}
 
 	}
