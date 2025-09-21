@@ -40,6 +40,7 @@ public class EntradaArquivo {
 					listaFuncionarios.add(funcionario);
 					funcionarioDao.inserirFuncionario(funcionario);
 					atual = funcionario;
+					
 					ehVazio = true;
 
 				} else {
@@ -49,7 +50,7 @@ public class EntradaArquivo {
 							LocalDate.parse(lerDependente[2]), EnumParentesco.valueOf(lerDependente[3]));
 
 					listaDependentes.add(dependentes);
-					dependenteDao.inserirDependente(dependentes, null);
+					dependenteDao.inserirDependente(dependentes, atual.getCpf());
 					System.out.println(dependentes.toString());
 				}
 			}

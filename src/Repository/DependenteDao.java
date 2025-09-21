@@ -29,14 +29,18 @@ public class DependenteDao {
 
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sqlVerifica);
+			stmt.setString(1, cpf_funcionario); // passando
 			ResultSet rs = stmt.executeQuery();
 
-			func = new Funcionario(rs.getInt("id_funcionario"));
+			if (rs.next()) { // verificar se achou
+		        func = new Funcionario(rs.getInt("id_funcionario"));
+		    }
+			
 			stmt.close();
 			rs.close();
 
 		} catch (SQLException e) {
-			System.out.println("Funcionario não encontrado" + e.getMessage());
+			System.out.println("Funcionario não encontrado. " + e.getMessage());
 		}
 
 		LocalDate data = LocalDate.now();
