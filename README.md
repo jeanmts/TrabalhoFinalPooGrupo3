@@ -1,6 +1,5 @@
 # Empresa Poo
 
----
 
 ## Participantes
 
@@ -62,14 +61,10 @@ O projeto foi desenvolvido em **Java**, organizado em pacotes para garantir clar
 - `Pessoa` é abstrata e serve de base para `Funcionario` e `Dependente`.  
 - `Funcionario` agrega uma lista de `Dependente`.  
 - `FolhaPagamento` está associada a um único `Funcionario`, contendo atributos como `dataPagamento`, `descontoINSS`, `descontoIR` e `salarioLiquido`.
-
 ---
 
-## Diagrama de Classes (UML)
+## Diagrama de Classes (UML) 
 
-Diagrama desenvolvido no trabalho:  
-
-![Diagrama de Classes]
 <img width="786" height="841" alt="DiagramaUML" src="https://github.com/user-attachments/assets/853b17aa-0dc2-4634-87a4-38f541472761" />
 
 ---
@@ -100,7 +95,6 @@ psql -U postgres -c "CREATE DATABASE empresa_poo;"
 3. **Rodar o script de tabelas**
 ```
 psql -U <usuario> -d empresa_poo -f src/sql/schema.sql
-
 ```
 
 4. **Configurar a conexão**
@@ -109,7 +103,6 @@ Ajustar ```ConnectionFactory``` com URL, usuário e senha do PostgreSQL:
 private static final String URL = "jdbc:postgresql://localhost:5432/empresa_poo";
 private static final String USER = "seu_usuario";
 private static final String PASSWORD = "sua_senha";
-
 ```
 
 5. **Executar a aplicação**
