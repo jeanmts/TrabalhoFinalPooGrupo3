@@ -3,11 +3,11 @@
 
 ## Participantes
 
-- Amanda Lisboa Ramos da Cunha  
-- (Espaço para o Nome do Participante 2)  
-- (Espaço para o Nome do Participante 3)  
-- (Espaço para o Nome do Participante 4)  
-- (Espaço para o Nome do Participante 5)  
+- AMANDA LISBOA RAMOS DA CUNHA  
+- JEAN CARLOS SANTOS MATOS DOS SANTOS 
+- FERNANDA XABUDÉ MOREIRA BOMFILIOL  
+- LUCAS GOMES DOS SANTOS 
+- RENAN MELO DE OLIVEIRA CARDOSO  
 
 ---
 
