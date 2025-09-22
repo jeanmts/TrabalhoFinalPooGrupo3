@@ -202,7 +202,6 @@ public class Aplicacao {
 					System.out.println("Listagem de Folhas de Pagamento");
 					for (FolhaPagamento folhaPa : folhaPagamentoDao.listarFolhasPagamento()) {
 						System.out.println(folhaPa);
-						// para cada folha, imprima ela na tela
 					}
 					break;
 				case 2:
@@ -210,8 +209,10 @@ public class Aplicacao {
 					System.out.print("Digite o ID da folha que irá atualizar: ");
 					int idFolha = sc.nextInt();
 					sc.nextLine();
-					folhaPagamentoDao.atualizarFolhaPagamento(folhaPgto, idFolha);
-					System.out.println("Folha de pagamento atualizada com sucesso!");
+
+					System.out.print("Digite a nova data de pagamento (AAAA-MM-DD): ");
+					LocalDate dataDePagamento = LocalDate.parse(sc.nextLine());
+					folhaPagamentoDao.atualizarDataPagamento(idFolha, dataDePagamento);
 					break;
 				case 3:
 					System.out.println("Remover Folha de Pagamento");

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,8 @@ public class FolhaPagamentoDao {
 			stmt.setDate(2, java.sql.Date.valueOf(folhaP.getDataPagamento()));
 			stmt.setDouble(3, folhaP.calcularINSS());
 			stmt.setDouble(4, folhaP.calcularIR());
-			stmt.setDouble(5, folhaP.calcularSalarioLiquido(folhaP.getFuncionario().getSalarioBruto(), qtdeDependentes));
+			stmt.setDouble(5,
+					folhaP.calcularSalarioLiquido(folhaP.getFuncionario().getSalarioBruto(), qtdeDependentes));
 			stmt.execute();
 			stmt.close();
 			System.out.println("Folha de pagamento criada com sucesso!");
@@ -40,49 +42,44 @@ public class FolhaPagamentoDao {
 		String sql = "select * from FolhaPagamento";
 		List<FolhaPagamento> folhasP = new ArrayList<>();
 		try {
-	        PreparedStatement stmt = connection.prepareStatement(sql);
-	        ResultSet rs = stmt.executeQuery();
-	        while (rs.next()) {
-	            FolhaPagamento folhaP = new FolhaPagamento();
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				FolhaPagamento folhaP = new FolhaPagamento();
 
-	            folhaP.setId_folha(rs.getInt("id_folha"));
-	            folhaP.setId_funcionario(rs.getInt("id_funcionario_func"));
-	            folhaP.setDataPagamentoo(rs.getDate("data_pagamento").toLocalDate());
-	            folhaP.setSalarioLiquido(rs.getDouble("salarioLiquido"));
+				folhaP.setId_folha(rs.getInt("id_folha"));
+				folhaP.setId_funcionario(rs.getInt("id_funcionario_func"));
+				folhaP.setDataPagamentoo(rs.getDate("data_pagamento").toLocalDate());
+				folhaP.setSalarioLiquido(rs.getDouble("salarioLiquido"));
 
-	            Funcionario f = new Funcionario();
-	            f.setDescontoInss(rs.getDouble("desconto_inss"));
-	            f.setDescontoIR(rs.getDouble("desconto_ir"));
+				Funcionario f = new Funcionario();
+				f.setDescontoInss(rs.getDouble("desconto_inss"));
+				f.setDescontoIR(rs.getDouble("desconto_ir"));
 
-	            folhaP.setFuncionario(f);
+				folhaP.setFuncionario(f);
 
-	            folhasP.add(folhaP);
-	        }
-	        rs.close();
-	        stmt.close();
-	        System.out.println("Listagem das Folhas de Pagamentos concluída.");
-	    } catch (SQLException e) {
-	        System.out.println("Erro ao listar Folhas de Pagamento: " + e.getMessage());
-	    }
-	    return folhasP;
+				folhasP.add(folhaP);
+			}
+			rs.close();
+			stmt.close();
+			System.out.println("Listagem das Folhas de Pagamentos concluída.");
+		} catch (SQLException e) {
+			System.out.println("Erro ao listar Folhas de Pagamento: " + e.getMessage());
+		}
+		return folhasP;
 	}
 
-	public void atualizarFolhaPagamento(FolhaPagamento folhaP, int id_folha) {
-		String sql = "update FolhaPagamento set data_pagamento=?, " + "desconto_INSS=?, " + "desconto_IR=?, "
-				+ "salarioLiquido=? where id_folha=?";
+	public void atualizarDataPagamento(int id_folha, LocalDate dataPagamento) {
+		String sql = "update FolhaPagamento set data_pagamento = ? where id_folha = ?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setDate(1, java.sql.Date.valueOf(folhaP.getDataPagamento()));
-			stmt.setDouble(2, folhaP.getFuncionario().getDescontoInss());
-			stmt.setDouble(3, folhaP.getFuncionario().getDescontoIR());
-			stmt.setDouble(4, folhaP.getSalarioLiquido());
-			stmt.setDouble(5, id_folha);
+			stmt.setDate(1, java.sql.Date.valueOf(dataPagamento));
+			stmt.setInt(2, id_folha);
 			stmt.execute();
 			stmt.close();
-			System.out.println("Folha de Pagamento atualizado com sucesso!");
-			System.out.println( folhaP.toString());
+			System.out.println("Data de pagamento atualizada com sucesso!");
 		} catch (SQLException e) {
-			System.out.println("Erro ao atualizar Folha de Pagamento!");
+			System.out.println("Erro ao atualizar a data de pagamento: " + e.getMessage());
 		}
 	}
 
