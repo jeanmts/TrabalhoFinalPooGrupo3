@@ -234,7 +234,6 @@ public class Aplicacao {
 			String pathSaida = sc.nextLine();
 			SaidaArquivo saidaArquivo = new SaidaArquivo();
 
-			System.out.println(listaFuncionarios.get(0));
 			saidaArquivo.escritorArquivo(pathSaida, listaFuncionarios, listaFolhaPagamentos);
 			funcionarioDao.fecharPrograma();
 			sc.close();
