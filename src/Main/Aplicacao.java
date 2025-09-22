@@ -24,7 +24,7 @@ public class Aplicacao {
 		Scanner sc = new Scanner(System.in);
 		sc.useLocale(Locale.US);
 
-		System.out.println("===== Nome Empresa =====");
+		System.out.println("===== PooGestor RH =====");
 		System.out.println("Informe o endereço e o nome do arquivo: (com a extensão) ");
 		try {
 			String path = sc.nextLine();

@@ -17,7 +17,7 @@ public class SaidaArquivo {
 
 	public void escritorArquivo(String path, List<Funcionario> funcionarios, List<FolhaPagamento> pgto) throws IOException {
 
-		BufferedWriter escritor = new BufferedWriter(new FileWriter(path + "tabela.csv"));
+		BufferedWriter escritor = new BufferedWriter(new FileWriter(path + "\\tabela.csv"));
 		DecimalFormat df = new DecimalFormat("#.00");
 		
 		try {
