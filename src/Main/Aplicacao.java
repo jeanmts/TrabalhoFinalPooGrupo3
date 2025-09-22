@@ -105,7 +105,7 @@ public class Aplicacao {
 					for (Funcionario fun : funcionarioDao.listarFuncionarios()) {
 						System.out.println(fun);
 					}
-					// para cada funcionario, imprima ele na tela
+
 					break;
 
 				case 2:
@@ -153,7 +153,7 @@ public class Aplicacao {
 					System.out.println("Listando todos os Dependentes.");
 					for (Dependente depen : dependenteDao.listarDependentes()) {
 						System.out.println(depen);
-						// para cada dependente, imprima ele na tela
+
 					}
 					break;
 				case 2:
@@ -236,7 +236,7 @@ public class Aplicacao {
 
 			System.out.println(listaFuncionarios.get(0));
 			saidaArquivo.escritorArquivo(pathSaida, listaFuncionarios, listaFolhaPagamentos);
-//			funcionarioDao.fecharPrograma();
+			funcionarioDao.fecharPrograma();
 			sc.close();
 		} catch (DependenteException e) {
 			System.out.println(e.getMessage());
