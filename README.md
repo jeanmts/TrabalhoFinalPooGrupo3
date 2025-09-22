@@ -5,7 +5,7 @@
 
 - AMANDA LISBOA RAMOS DA CUNHA  
 - JEAN CARLOS SANTOS MATOS DOS SANTOS 
-- FERNANDA XABUDÉ MOREIRA BOMFILIOL  
+- FERNANDA XABUDÉ MOREIRA BOMFILIOLI  
 - LUCAS GOMES DOS SANTOS 
 - RENAN MELO DE OLIVEIRA CARDOSO  
 
@@ -65,7 +65,7 @@ O projeto foi desenvolvido em **Java**, organizado em pacotes para garantir clar
 
 ## Diagrama de Classes (UML) 
 
-<img width="786" height="841" alt="DiagramaUML" src="https://github.com/user-attachments/assets/853b17aa-0dc2-4634-87a4-38f541472761" />
+<img width="1949" height="797" alt="uml" src="https://github.com/user-attachments/assets/07fc233f-f0d3-4b87-974a-cc70cf55fdef" />
 
 ---
 
