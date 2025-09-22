@@ -29,10 +29,10 @@ public class DependenteDao {
 
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sqlVerifica);
-			stmt.setString(1, cpf_funcionario); // passando
+			stmt.setString(1, cpf_funcionario); 
 			ResultSet rs = stmt.executeQuery();
 
-			if (rs.next()) { // verificar se achou
+			if (rs.next()) { 
 		        func = new Funcionario(rs.getInt("id_funcionario"));
 		    }
 			 
